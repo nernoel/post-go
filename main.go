@@ -2,11 +2,13 @@ package main
 
 import (
 	"bufio"
+	"database/sql"
 	"fmt"
 	"os"
 
 	_ "github.com/lib/pq"
 )
+
 
 type DatabaseConfig struct {
 	Host     string
@@ -16,8 +18,9 @@ type DatabaseConfig struct {
 	Database string
 }
 
-func GetDatabaseConnStr(c *DatabaseConfig) (connStr string) {
+func GetDatabaseConnInfo(c *DatabaseConfig) {
 	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("Enter the database connection details\n")
 
 	fmt.Print("Enter the Host: ")
 	scanner.Scan()
@@ -38,13 +41,55 @@ func GetDatabaseConnStr(c *DatabaseConfig) (connStr string) {
 	fmt.Print("Enter the Database name: ")
 	scanner.Scan()
 	c.Database = scanner.Text()
-
-	connStr = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", c.User, c.Password, c.Host, c.Port, c.Database)
-	return
 }
 
+func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
+	// Get the connection info from the user
+	GetDatabaseConnInfo(dbConfig)
+
+	// Define the db connection string
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		dbConfig.Host, dbConfig.Port, dbConfig.User, dbConfig.Password, dbConfig.Database)
+
+	// Attempt to connect to the database
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		fmt.Println("There was an issue connecting to the database... Please try again!")
+		return false
+	}
+	defer db.Close()
+
+	// Verify the connection is alive
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("There was an issue connecting to the database... Please try again!")
+		return false
+	}
+
+	fmt.Println("Successfully connected to the database!")
+	return true
+}
+
+func DisplayCommands() {
+	
+}
+
+func showAllDatabases() {
+
+}
+
+
 func main() {
-	// config := &DatabaseConfig{}
-	// connStr := GetDatabaseConnStr(config)
-	// fmt.Println(connStr) // print for testing
+	dbConfig := &DatabaseConfig{}
+	
+	/*
+	 * If database returns true then run the main application 
+	 */
+	if CheckDatabaseConn(dbConfig) == true {
+		//
+	}
+
+
+
+	
 }
