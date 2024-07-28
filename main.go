@@ -9,7 +9,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
 type DatabaseConfig struct {
 	Host     string
 	Port     string
@@ -70,26 +69,11 @@ func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
 	return true
 }
 
-func DisplayCommands() {
-	
-}
-
-func showAllDatabases() {
-
-}
 
 
 func main() {
-	dbConfig := &DatabaseConfig{}
-	
-	/*
-	 * If database returns true then run the main application 
-	 */
-	if CheckDatabaseConn(dbConfig) == true {
-		//
-	}
+	//dbConfig := &DatabaseConfig{}
+	//fmt.Println("")
 
-
-
-	
 }
+
