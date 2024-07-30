@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 
 	_ "github.com/lib/pq"
@@ -67,6 +68,33 @@ func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
 
 	fmt.Println("Successfully connected to the database!")
 	return true
+}
+
+func listAllDatabases(db *sql.DB) ([]string, error) {
+	// Selects all databases from user database
+	query := "SELECT datname FROM pg_database WHERE datistemplate = false"
+	rows, err := db.Query(query)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	// Iterate through the databases Slice to return
+	var databases []string
+	for rows.Next() {
+		var dbName string
+		if err := rows.Scan(&dbName); err != nil {
+			log.Fatal("Error scanning row")
+		}
+		databases = append(databases, dbName)
+	}
+
+	// Check for errors scanning rows
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	return databases, nil
 }
 
 func main() {

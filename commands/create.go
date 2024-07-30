@@ -14,7 +14,7 @@ func createNewDatabase(db *sql.DB) {
 	 * Prompt user to enter name and read with bufio
 	 */
 	scanner := bufio.NewScanner(os.Stdin) 
-	fmt.Print("Enter the name of the database to be created!")
+	fmt.Print("Enter the name of the database to be created: ")
 	scanner.Scan()
 	databaseName := scanner.Text()
 
