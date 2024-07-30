@@ -9,7 +9,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
 type DatabaseConfig struct {
 	Host     string
 	Port     string
@@ -70,15 +69,13 @@ func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
 	return true
 }
 
-
-
 func main() {
 	isConnected := false
 	dbConfig := &DatabaseConfig{}
 
 	if CheckDatabaseConn(dbConfig) {
 		isConnected = true
-	} 
+	}
 	/*
 	 * Continuously run program while db is connected
 	 * User is able to enter more simple commands instead of large queries to perform commands
@@ -86,8 +83,7 @@ func main() {
 	 * NOTE: Consider adding query to print to standard out to show user ??
 	 */
 	for isConnected {
-		
+
 	}
 
-	
 }
