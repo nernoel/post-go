@@ -70,6 +70,11 @@ func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
 	return true
 }
 
+/*
+ * Function needs to print a list of all databases
+ * Possibly with db information in
+ * a table styling
+ */
 func listAllDatabases(db *sql.DB) ([]string, error) {
 	// Selects all databases from user database
 	query := "SELECT datname FROM pg_database WHERE datistemplate = false"
@@ -86,6 +91,7 @@ func listAllDatabases(db *sql.DB) ([]string, error) {
 		if err := rows.Scan(&dbName); err != nil {
 			log.Fatal("Error scanning row")
 		}
+		// Add the databases to the database name
 		databases = append(databases, dbName)
 	}
 
