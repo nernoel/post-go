@@ -144,3 +144,9 @@ func deleteDatabase(db *sql.DB) {
 	}
 
 }
+
+func readDataabse(db *sql.DB) {
+	/* Read the contents for a database
+	 *
+	 */
+}
