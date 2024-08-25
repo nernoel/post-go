@@ -8,7 +8,10 @@ import (
 	"os"
 	"time"
 )
-
+/*
+ * Database config representing 
+ * user data to connect to user database
+ */
 type DatabaseConfig struct {
 	Host     string
 	Port     string
@@ -18,8 +21,13 @@ type DatabaseConfig struct {
 }
 
 /* Global variables */
-var scanner = bufio.NewScanner(os.Stdin)
+var scanner = bufio.NewScanner(os.Stdin) // Scanner for standard input
 
+/*
+ * Function to get user database connection information
+ * User enters the database connection details which include:
+ * the host, the port, the password and the database name to connect to
+ */
 func GetDatabaseConnInfo(c *DatabaseConfig) {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Enter the database connection details\n")
@@ -70,6 +78,14 @@ func CheckDatabaseConn(dbConfig *DatabaseConfig) bool {
 
 	fmt.Println("Successfully connected to the database!")
 	return true
+}
+
+/*
+* Function to print a list of all the custom db commands
+* In the main function user can use the 'h' key to view all commands
+ */
+func viewAllCommands() {
+	fmt.Println("Below are all the commands available")
 }
 
 /*
